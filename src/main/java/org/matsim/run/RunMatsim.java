@@ -35,16 +35,21 @@ public class RunMatsim {
 		
 		Config config ;
 		if ( args.length==0 || args[0]=="" ) {
+			/** load file with the parameters */
 			config = ConfigUtils.loadConfig( "scenarios/equil/config.xml" ) ;
-			config.controler().setLastIteration(1);
+			config.controler().setLastIteration(50);
 			config.controler().setOverwriteFileSetting( OverwriteFileSetting.deleteDirectoryIfExists );
+			config.controler().setWriteEventsInterval(5);
 		} else {
 			config = ConfigUtils.loadConfig(args[0]) ;
 		}
+		/** Build different structures to run the simulation */
+		//Scenario scenario = ScenarioUtils.loadScenario(config) ;
 		
-		Scenario scenario = ScenarioUtils.loadScenario(config) ;
-
-		Controler controler = new Controler( scenario ) ;
+		/** Controler can also take a config file or a path, Ctrl+Space inside the brackets to 
+		 * see options */
+		Controler controler = new Controler (config);
+		//Controler controler = new Controler( scenario ) ;
 
 		controler.run();
 
